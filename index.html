@@ -1,0 +1,200 @@
+<!doctype html>
+<!--
+  Based on the open-source template "HTML-CSS-Contact-Form" by Sharlmagne.
+  Source repository: https://github.com/Sharlmagne/HTML-CSS-Contact-Form
+  Adapted for the Contributor Onboarding Intake page: Google Fonts link and
+  the external stylesheet were removed, all CSS was inlined into a single
+  self-contained page with no external stylesheets, scripts, or network calls.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contributor Onboarding Intake</title>
+    <style>
+        body {
+            font-family: "Roboto", Arial, Helvetica, sans-serif;
+            background-color: aliceblue;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            width: 30rem;
+            margin: 0 auto;
+            background-color: rgb(254, 249, 255);
+            border-radius: 6px;
+            padding: 1rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 0.75rem;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        input,
+        select {
+            width: 30rem;
+            display: block;
+            padding: 0.2rem;
+            font: inherit;
+            box-sizing: border-box;
+            font-size: 0.8rem;
+            margin: 0.25rem 0;
+        }
+
+        input:focus {
+            background-color: rgba(253, 202, 0, 0.16);
+        }
+
+        .btn-group {
+            text-align: right;
+            margin-top: 1rem;
+        }
+
+        button {
+            margin-left: 0.1rem;
+            padding: 0.4rem 1rem;
+            background-color: rgb(254, 249, 255);
+            color: rgb(40, 21, 73);
+            border: 1px solid rgb(29, 1,  56);
+            border-radius: 4px;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        button:hover,
+        #submit:hover {
+            background-color: rgb(253, 202, 0);
+            color: rgb(40, 21, 73);
+        }
+
+        #submit {
+            color: rgb(246, 240, 255);
+            background-color: rgb(40, 21, 73);
+        }
+
+        #summary {
+            display: none;
+            width: 30rem;
+            margin: 0 auto;
+            background-color: rgb(254, 249, 255);
+            border-radius: 6px;
+            padding: 1rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #summary h2 {
+            color: rgb(40, 21, 73);
+            font-size: 1.1rem;
+        }
+
+        #summary dl {
+            margin: 0;
+        }
+
+        #summary dt {
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: rgb(40, 21, 73);
+            margin-top: 0.75rem;
+        }
+
+        #summary dd {
+            margin: 0.1rem 0 0 0;
+            font-size: 0.9rem;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contributor Onboarding Intake</h1>
+    <main>
+        <form id="intake-form" action="#" method="get">
+            <section>
+                <ul>
+                    <li>
+                        <label for="full-name">Full name</label>
+                        <input type="text" required id="full-name" name="full-name" placeholder="Enter your full name">
+                    </li>
+                    <li>
+                        <label for="email">Email</label>
+                        <input type="email" required id="email" name="email" placeholder="Enter your email address">
+                    </li>
+                    <li>
+                        <label for="team">Team</label>
+                        <input type="text" required id="team" name="team" placeholder="Enter your team">
+                    </li>
+                    <li>
+                        <label for="attachment">Attachment</label>
+                        <input type="file" required id="attachment" name="attachment">
+                    </li>
+                </ul>
+            </section>
+            <section class="btn-group">
+                <button type="reset">Clear</button>
+                <button id="submit" type="submit">Submit</button>
+            </section>
+        </form>
+
+        <section id="summary" aria-live="polite">
+            <h2 id="summary-title">Submission received</h2>
+            <p>Thank you! Here is a summary of what you submitted:</p>
+            <dl>
+                <dt>Full name</dt>
+                <dd id="summary-name"></dd>
+                <dt>Email</dt>
+                <dd id="summary-email"></dd>
+                <dt>Team</dt>
+                <dd id="summary-team"></dd>
+                <dt>Attachment</dt>
+                <dd id="summary-attachment"></dd>
+            </dl>
+        </section>
+    </main>
+    <script>
+        var intakeForm = document.getElementById('intake-form');
+        var summary = document.getElementById('summary');
+
+        intakeForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var fullName = document.getElementById('full-name').value;
+            var email = document.getElementById('email').value;
+            var team = document.getElementById('team').value;
+            var attachmentInput = document.getElementById('attachment');
+            var attachmentName = '';
+            if (attachmentInput.files && attachmentInput.files.length > 0) {
+                attachmentName = attachmentInput.files[0].name;
+            }
+
+            var confirmed = window.confirm(
+                'Please confirm your submission:\n\n' +
+                'Full name: ' + fullName + '\n' +
+                'Email: ' + email + '\n' +
+                'Team: ' + team + '\n' +
+                'Attachment: ' + attachmentName
+            );
+
+            if (confirmed) {
+                document.getElementById('summary-name').textContent = fullName;
+                document.getElementById('summary-email').textContent = email;
+                document.getElementById('summary-team').textContent = team;
+                document.getElementById('summary-attachment').textContent = attachmentName;
+                summary.style.display = 'block';
+                summary.scrollIntoView({ block: 'nearest' });
+            }
+        });
+    </script>
+</body>
+</html>
